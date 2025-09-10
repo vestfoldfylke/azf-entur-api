@@ -1,4 +1,5 @@
 const { app } = require('@azure/functions');
+const { logger } = require('@vtfk/logger');
 
 app.http('stopPlaces', {
     methods: ['GET'],
