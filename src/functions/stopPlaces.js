@@ -10,6 +10,7 @@ app.http('stopPlaces', {
         if (!request.params.routeId) {
             return { status: 400, jsonBody: { error: 'routeId parameter is required' } };
         }
+        logger('Fetching stop places for routeId', { source: 'stopPlaces', routeId: request.params.routeId });
         const stopPlaces = await getStopPlacesForLine(request.params.routeId);
 
         return { status: 200, jsonBody: { stopPlaces } };
