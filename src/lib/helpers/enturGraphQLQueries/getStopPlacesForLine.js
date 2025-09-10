@@ -49,7 +49,7 @@ const getStopPlacesForLine = async (routeId) => {
         logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Fetched ${response.data.data.line.quays.length} stopPlaces for line with routeId: ${routeId}`])
         return response.data.data.line.quays
     } catch (error) {
-        logger(JSON.stringify(error))
+        logger('error', ['enturGraphQLQueries', 'getStopPlacesForLine', 'Error making request to EnTur GraphQL API', error])
         logger('error', ['enturGraphQLQueries', 'getStopPlacesForLine', 'Error fetching stopPlaces from EnTur GraphQL API', error.message])
         throw new Error('Error fetching stopPlaces from EnTur GraphQL API')
     }
