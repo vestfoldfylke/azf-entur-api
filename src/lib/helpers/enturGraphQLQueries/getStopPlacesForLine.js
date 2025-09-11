@@ -41,7 +41,16 @@ const getStopPlacesForLine = async (routeId) => {
     }
     // Making the POST request to EnTur GraphQL API
     try {
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Making request to EnTur GraphQL API for routeId: ${routeId}`])
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Using EnTur API URL: ${enTur.journeyPlannerApiUrl}`])
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Using ET Client Name: ${enTur.ETClientName}`])
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `GraphQL Query: ${JSON.stringify(graphQLQuery)}`])
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Request Headers: ${JSON.stringify(headers)}`])
+
         const response = await axios.post(enTur.journeyPlannerApiUrl, graphQLQuery, { headers })
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Received response from EnTur GraphQL API for routeId: ${routeId}`])
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Response Data: ${JSON.stringify(response.data)}`])
+
         if (response.data.errors) {
             logger('error', ['enturGraphQLQueries', 'getStopPlacesForLine', 'Error in GraphQL response', response.data.errors])
             throw new Error('Error in GraphQL response')
