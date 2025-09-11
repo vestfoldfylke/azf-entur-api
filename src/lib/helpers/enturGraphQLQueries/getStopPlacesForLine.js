@@ -44,8 +44,10 @@ const getStopPlacesForLine = async (routeId) => {
         logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Making request to EnTur GraphQL API for routeId: ${routeId}`])
         logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Using EnTur API URL: ${enTur.journeyPlannerApiUrl}`])
         logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Using ET Client Name: ${enTur.ETClientName}`])
-        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `GraphQL Query: ${JSON.stringify(graphQLQuery)}`])
-        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Request Headers: ${JSON.stringify(headers)}`])
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `GraphQL Query (stringify): ${JSON.stringify(graphQLQuery)}`])
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Request Headers (stringify): ${JSON.stringify(headers)}`])
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `GraphQL Query: ${graphQLQuery}`])
+        logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Request Headers: ${headers}`])
 
         const response = await axios.post(enTur.journeyPlannerApiUrl, graphQLQuery, { headers })
         logger('info', ['enturGraphQLQueries', 'getStopPlacesForLine', `Received response from EnTur GraphQL API for routeId: ${routeId}`])
