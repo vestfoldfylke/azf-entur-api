@@ -11,6 +11,7 @@ This application fetches and processes public transport data from EnTur (Norway'
 - **Route Types API**: Get available route types from GTFS data
 - **Lines API**: Retrieve transport lines, optionally filtered by transport mode
 - **Stop Places API**: Get stop places for specific routes
+- **Departure Times API**: Get real-time departure times for specific stops and lines
 - **Automatic Data Updates**: Daily GTFS data processing via timer function
 - **MongoDB Integration**: Persistent storage for transport data
 - **EnTur GraphQL Integration**: Real-time stop places data
@@ -22,6 +23,7 @@ This application fetches and processes public transport data from EnTur (Norway'
 - **routeTypes** - HTTP trigger for route types data
 - **lines** - HTTP trigger for transport lines (with optional filtering)
 - **stopPlaces** - HTTP trigger for stop places by route ID
+- **departureTime** - HTTP trigger for departure times from a specific stop
 - **processGTFSFileData** - Timer trigger for daily data updates (04:00 UTC)
 
 ### Data Sources
@@ -57,6 +59,16 @@ GET /api/stopPlaces/{routeId}
 
 Parameters:
 - `routeId` (required): The route identifier (e.g., `TEL:Line:8011`)
+
+### Get Departure Times
+```
+GET /api/departureTime/{quayId}/{date}/{line}
+```
+
+Parameters:
+- `quayId` (required): The quay/stop place identifier (e.g., "NSR:StopPlace:19984")
+- `date` (required): The date and time in ISO 8601 format (e.g., "2025-12-02T00:00:000.000Z")
+- `line` (required): The line identifier to filter departures (e.g., "TEL:Line:8046")
 
 ## 🛠️ Setup and Installation
 
@@ -221,6 +233,21 @@ The application supports filtering by NeTEx transport modes:
 		}
     ]
 }
+```
+
+### Departure Times Response
+```json
+[
+  {
+    "expectedDepartureTime": "14:30:00"
+  },
+  {
+    "expectedDepartureTime": "15:00:00"
+  },
+  {
+    "expectedDepartureTime": "15:30:00"
+  }
+]
 ```
 ## 📝 Dependencies
 
