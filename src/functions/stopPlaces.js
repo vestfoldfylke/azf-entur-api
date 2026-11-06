@@ -1,18 +1,27 @@
-const { app } = require('@azure/functions');
-const { logger } = require('@vtfk/logger');
+const { app } = require("@azure/functions");
+const { getStopPlacesForLine } = require("../lib/helpers/enturGraphQLQueries/getStopPlacesForLine.js");
+const { handleTrigger } = require("../middleware/handleTrigger.js");
 
-app.http('stopPlaces', {
-    methods: ['GET'],
-    authLevel: 'function',
-    route: 'stopPlaces/{routeId}',
-    handler: async (request, context) => {
-        const { getStopPlacesForLine } = require('../lib/helpers/enturGraphQLQueries/getStopPlacesForLine')
-        // Returns the stopPlaces for a given line (routeId) from EnTur GraphQL API
-        if (!request.params.routeId) {
-            return { status: 400, jsonBody: { error: 'routeId parameter is required' } }
-        }
-        const stopPlaces = await getStopPlacesForLine(request.params.routeId)
+const handleStopPlaces = async (request) => {
+  // Returns the stopPlaces for a given line (routeId) from EnTur GraphQL API
+  if (!request.params.routeId) {
+    return {
+      status: 400,
+      jsonBody: { error: "routeId parameter is required" }
+    };
+  }
 
-        return { status: 200, jsonBody: stopPlaces }
-    }
+  const stopPlaces = await getStopPlacesForLine(request.params.routeId);
+
+  return {
+    status: 200,
+    jsonBody: stopPlaces
+  };
+};
+
+app.http("stopPlaces", {
+  methods: ["GET"],
+  authLevel: "function",
+  route: "stopPlaces/{routeId}",
+  handler: async (request, context) => await handleTrigger(request, context, handleStopPlaces)
 });

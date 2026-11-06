@@ -1,14 +1,16 @@
-const { app } = require('@azure/functions');
-const { downloadGTFSFileAndImportLines } = require('../lib/jobs/getLines');
-const { logger } = require('@vtfk/logger');
+const { app } = require("@azure/functions");
+const { logger } = require("@vestfoldfylke/loglady");
+const { downloadGTFSFileAndImportLines } = require("../lib/jobs/getLines.js");
+const { handleTimer } = require("../middleware/handleTimer.js");
 
-app.timer('processGTFSFileData', {
-    schedule: '0 4 * * *', // Every day at 04:00
-    handler: async (myTimer, context) => {
-        logger('info', 'Starting scheduled function processGTFSFileData', { source: 'processGTFSFileData' })
-        const result = await downloadGTFSFileAndImportLines()
-        logger('info', 'Finished scheduled function processGTFSFileData', { source: 'processGTFSFileData', result })
-        return {status: 200, jsonBody: result}
+const handleProcessGTFSFileData = async () => {
+  logger.info("Starting scheduled function processGTFSFileData");
 
-    }
+  const result = await downloadGTFSFileAndImportLines();
+  logger.info("Finished scheduled function processGTFSFileData: {@Result}", result);
+};
+
+app.timer("processGTFSFileData", {
+  schedule: "0 0 4 * * *",
+  handler: async (timer, context) => await handleTimer(timer, context, handleProcessGTFSFileData)
 });

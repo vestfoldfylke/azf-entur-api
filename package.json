@@ -1,20 +1,23 @@
 {
-  "name": "",
-  "version": "1.0.4",
+  "name": "azf-entur-api",
+  "version": "1.0.5",
   "description": "",
   "main": "src/functions/*.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "test": "npx @biomejs/biome check",
+    "lint:fix": "npx @biomejs/biome check --write"
   },
   "dependencies": {
-    "@azure/functions": "^4.0.0",
-    "@vtfk/logger": "^6.3.4",
-    "adm-zip": "^0.5.16",
-    "axios": "^1.11.0",
-    "mongodb": "^6.19.0"
+    "@azure/functions": "^4.17.0",
+    "@vestfoldfylke/loglady": "^2.1.0",
+    "adm-zip": "^0.6.1",
+    "mongodb": "^7.7.0"
   },
   "devDependencies": {
-    "azure-functions-core-tools": "^4.x"
+    "@biomejs/biome": "2.6.4"
   }
 }

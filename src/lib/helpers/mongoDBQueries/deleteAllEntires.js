@@ -1,6 +1,6 @@
-const { getMongoClient } = require('../../mongoDB/mongoClient')
-const { mongoDB } = require('../../../../config')
-const { logger } = require('@vtfk/logger')
+const { getMongoClient } = require("../../mongoDB/mongoClient.js");
+const { mongoDB } = require("../../../../config.js");
+const { logger } = require("@vestfoldfylke/loglady");
 
 /**
  * Helper function to delete all entries from a specified MongoDB collection
@@ -8,20 +8,21 @@ const { logger } = require('@vtfk/logger')
  * @returns {Promise<void>}
  */
 const deleteAllEntries = async (collection) => {
-    if(!collection) {
-        throw new Error('Collection name must be provided')
-    }
+  if (!collection) {
+    throw new Error("Collection name must be provided");
+  }
 
-    const mongoClient = await getMongoClient()
-    try {
-        logger('info', ['mongoDBQueries', 'deleteAllEntries', `Deleting all entries from collection ${collection}`])
-        await mongoClient.db(mongoDB.dbName).collection(collection).deleteMany({})
-    } catch (error) {
-        logger('error', ['mongoDBQueries', 'deleteAllEntries', 'Failed to delete entries', error.message])
-        throw new Error('Failed to delete entries')
-    }
-}
+  const mongoClient = await getMongoClient();
+
+  try {
+    logger.info("Deleting all entries from collection {Collection}", collection);
+    await mongoClient.db(mongoDB.dbName).collection(collection).deleteMany({});
+  } catch (error) {
+    logger.errorException(error, "Failed to delete entries from collection {Collection}", collection);
+    throw new Error("Failed to delete entries");
+  }
+};
 
 module.exports = {
-    deleteAllEntries
-}
+  deleteAllEntries
+};
