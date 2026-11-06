@@ -13,7 +13,14 @@
     "indentStyle": "space",
     "indentWidth": 2,
     "expand": "auto",
-    "includes": ["**", "!dist", "!node_modules", "!!package.json"]
+    "includes": [
+      "**",
+      "!dist",
+      "!node_modules",
+      "!!package.json",
+      "!!**/*.yml",
+      "!!**/*.yaml"
+    ]
   },
   "linter": {
     "enabled": true,
